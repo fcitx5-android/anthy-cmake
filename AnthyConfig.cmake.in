@@ -1,0 +1,9 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/AnthyTargets.cmake")
+
+set_and_check(LUA_INCLUDE_DIR "${PACKAGE_PREFIX_DIR}/include")
+add_library(Anthy::Library ALIAS "anthy-unicode")
+add_library(Anthy::Dictionary ALIAS "anthydic-unicode")
+
+check_required_components(Lua)
