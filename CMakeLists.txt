@@ -6,53 +6,29 @@ include(GNUInstallDirs)
 
 set(CONF_DIR "${CMAKE_INSTALL_SYSCONFDIR}")
 configure_file(
-    "${PROJECT_SOURCE_DIR}/config.h.in"
-    "${PROJECT_BINARY_DIR}/config.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/config.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/config.h"
 )
 
-include_directories("${PROJECT_BINARY_DIR}")
+include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
-set(anthy_headers
-    anthy-unicode/anthy/alloc.h
-    anthy-unicode/anthy/corpus.h
-    anthy-unicode/anthy/dicutil.h
-    anthy-unicode/anthy/logger.h
-    anthy-unicode/anthy/matrix.h
-    anthy-unicode/anthy/ruleparser.h
-    anthy-unicode/anthy/textdict.h
-    anthy-unicode/anthy/xchar.h
-    anthy-unicode/anthy/anthy.h
-    anthy-unicode/anthy/depgraph.h
-    anthy-unicode/anthy/feature_set.h
-    anthy-unicode/anthy/Makefile
-    anthy-unicode/anthy/ordering.h
-    anthy-unicode/anthy/segclass.h
-    anthy-unicode/anthy/texttrie.h
-    anthy-unicode/anthy/xstr.h
-    anthy-unicode/anthy/conf.h
-    anthy-unicode/anthy/dic.h
-    anthy-unicode/anthy/filemap.h
-    anthy-unicode/anthy/prediction.h
-    anthy-unicode/anthy/segment.h
-    anthy-unicode/anthy/word_dic.h
-    anthy-unicode/anthy/convdb.h
-    anthy-unicode/anthy/diclib.h
-    anthy-unicode/anthy/input.h
-    anthy-unicode/anthy/record.h
-    anthy-unicode/anthy/splitter.h
-    anthy-unicode/anthy/wtype.h
+set(Anthy_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/anthy-unicode")
+
+set(anthy_public_headers
+    ${Anthy_ROOT}/anthy/anthy.h
+    ${Anthy_ROOT}/anthy/dicutil.h
 )
 
 set(diclib_SRC
-    anthy-unicode/src-diclib/diclib.c
-    anthy-unicode/src-diclib/file_dic.c
-    anthy-unicode/src-diclib/filemap.c
-    anthy-unicode/src-diclib/xstr.c
-    anthy-unicode/src-diclib/xchar.c
-    anthy-unicode/src-diclib/alloc.c
-    anthy-unicode/src-diclib/conf.c
-    anthy-unicode/src-diclib/logger.c
-    anthy-unicode/src-diclib/ruleparser.c
+    ${Anthy_ROOT}/src-diclib/diclib.c
+    ${Anthy_ROOT}/src-diclib/file_dic.c
+    ${Anthy_ROOT}/src-diclib/filemap.c
+    ${Anthy_ROOT}/src-diclib/xstr.c
+    ${Anthy_ROOT}/src-diclib/xchar.c
+    ${Anthy_ROOT}/src-diclib/alloc.c
+    ${Anthy_ROOT}/src-diclib/conf.c
+    ${Anthy_ROOT}/src-diclib/logger.c
+    ${Anthy_ROOT}/src-diclib/ruleparser.c
 )
 # add_library(diclib SHARED "${diclib_SRC}")
 
@@ -61,55 +37,55 @@ add_compile_definitions(
     S_IWRITE=S_IWUSR
 )
 set(worddic_SRC
-    anthy-unicode/src-worddic/word_dic.c 
-    anthy-unicode/src-worddic/dic_util.c
-    anthy-unicode/src-worddic/wtype.c
-    anthy-unicode/src-worddic/texttrie.c
-    anthy-unicode/src-worddic/textdict.c
-    anthy-unicode/src-worddic/record.c
-    anthy-unicode/src-worddic/word_lookup.c
-    anthy-unicode/src-worddic/use_dic.c
-    anthy-unicode/src-worddic/priv_dic.c
-    anthy-unicode/src-worddic/mem_dic.c
-    anthy-unicode/src-worddic/ext_ent.c
-    anthy-unicode/src-worddic/matrix.c
-    anthy-unicode/src-worddic/feature_set.c
+    ${Anthy_ROOT}/src-worddic/word_dic.c 
+    ${Anthy_ROOT}/src-worddic/dic_util.c
+    ${Anthy_ROOT}/src-worddic/wtype.c
+    ${Anthy_ROOT}/src-worddic/texttrie.c
+    ${Anthy_ROOT}/src-worddic/textdict.c
+    ${Anthy_ROOT}/src-worddic/record.c
+    ${Anthy_ROOT}/src-worddic/word_lookup.c
+    ${Anthy_ROOT}/src-worddic/use_dic.c
+    ${Anthy_ROOT}/src-worddic/priv_dic.c
+    ${Anthy_ROOT}/src-worddic/mem_dic.c
+    ${Anthy_ROOT}/src-worddic/ext_ent.c
+    ${Anthy_ROOT}/src-worddic/matrix.c
+    ${Anthy_ROOT}/src-worddic/feature_set.c
 )
 add_library(anthydic-unicode SHARED "${diclib_SRC}" "${worddic_SRC}")
 target_include_directories(anthydic-unicode PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/anthy-unicode>
+    $<BUILD_INTERFACE:${Anthy_ROOT}>
     $<INSTALL_INTERFACE:include>
 )
 
 set(ordering_SRC
-    anthy-unicode/src-ordering/candswap.c
-    anthy-unicode/src-ordering/candsort.c
-    anthy-unicode/src-ordering/commit.c
-    anthy-unicode/src-ordering/relation.c
-    anthy-unicode/src-ordering/infosort.c
-    anthy-unicode/src-ordering/candhistory.c
+    ${Anthy_ROOT}/src-ordering/candswap.c
+    ${Anthy_ROOT}/src-ordering/candsort.c
+    ${Anthy_ROOT}/src-ordering/commit.c
+    ${Anthy_ROOT}/src-ordering/relation.c
+    ${Anthy_ROOT}/src-ordering/infosort.c
+    ${Anthy_ROOT}/src-ordering/candhistory.c
 )
 # add_library(ordering SHARED "${ordering_SRC}")
 
 set(splitter_SRC
-    anthy-unicode/src-splitter/wordlist.c
-    anthy-unicode/src-splitter/metaword.c
-    anthy-unicode/src-splitter/depgraph.c
-    anthy-unicode/src-splitter/splitter.c
-    anthy-unicode/src-splitter/evalborder.c
-    anthy-unicode/src-splitter/compose.c
-    anthy-unicode/src-splitter/lattice.c
-    anthy-unicode/src-splitter/segclass.c
+    ${Anthy_ROOT}/src-splitter/wordlist.c
+    ${Anthy_ROOT}/src-splitter/metaword.c
+    ${Anthy_ROOT}/src-splitter/depgraph.c
+    ${Anthy_ROOT}/src-splitter/splitter.c
+    ${Anthy_ROOT}/src-splitter/evalborder.c
+    ${Anthy_ROOT}/src-splitter/compose.c
+    ${Anthy_ROOT}/src-splitter/lattice.c
+    ${Anthy_ROOT}/src-splitter/segclass.c
 )
 # add_library(split SHARED "${splitter_SRC}")
 
 set(main_SRC
-    anthy-unicode/src-main/main.c
-    anthy-unicode/src-main/context.c
+    ${Anthy_ROOT}/src-main/main.c
+    ${Anthy_ROOT}/src-main/context.c
 )
 add_library(anthy-unicode SHARED "${splitter_SRC}" "${ordering_SRC}" "${main_SRC}")
 target_include_directories(anthy-unicode PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/anthy-unicode>
+    $<BUILD_INTERFACE:${Anthy_ROOT}>
     $<INSTALL_INTERFACE:include>
 )
 target_link_libraries(anthy-unicode
@@ -125,7 +101,7 @@ write_basic_package_version_file(
     COMPATIBILITY SameMajorVersion
 )
 
-install(DIRECTORY anthy-unicode/anthy TYPE INCLUDE)
+install(FILES ${anthy_public_headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/anthy)
 install(TARGETS anthy-unicode anthydic-unicode EXPORT AnthyTargets)
 install(EXPORT AnthyTargets
         FILE AnthyTargets.cmake
