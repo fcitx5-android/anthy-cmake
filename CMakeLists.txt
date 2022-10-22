@@ -10,7 +10,7 @@ configure_file(
     "${PROJECT_BINARY_DIR}/config.h"
 )
 
-include_directories("${PROJECT_BINARY_DIR}" anthy-unicode)
+include_directories("${PROJECT_BINARY_DIR}")
 
 set(anthy_headers
     anthy-unicode/anthy/alloc.h
@@ -56,6 +56,10 @@ set(diclib_SRC
 )
 # add_library(diclib SHARED "${diclib_SRC}")
 
+add_compile_definitions(
+    S_IREAD=S_IRUSR
+    S_IWRITE=S_IWUSR
+)
 set(worddic_SRC
     anthy-unicode/src-worddic/word_dic.c 
     anthy-unicode/src-worddic/dic_util.c
@@ -72,6 +76,10 @@ set(worddic_SRC
     anthy-unicode/src-worddic/feature_set.c
 )
 add_library(anthydic-unicode SHARED "${diclib_SRC}" "${worddic_SRC}")
+target_include_directories(anthydic-unicode PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/anthy-unicode>
+    $<INSTALL_INTERFACE:include>
+)
 
 set(ordering_SRC
     anthy-unicode/src-ordering/candswap.c
@@ -100,6 +108,10 @@ set(main_SRC
     anthy-unicode/src-main/context.c
 )
 add_library(anthy-unicode SHARED "${splitter_SRC}" "${ordering_SRC}" "${main_SRC}")
+target_include_directories(anthy-unicode PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/anthy-unicode>
+    $<INSTALL_INTERFACE:include>
+)
 target_link_libraries(anthy-unicode
     m
     anthydic-unicode
