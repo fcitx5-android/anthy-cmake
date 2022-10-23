@@ -54,7 +54,7 @@ set(worddic_SRC
 add_library(anthydic-unicode SHARED "${diclib_SRC}" "${worddic_SRC}")
 target_include_directories(anthydic-unicode PUBLIC
     $<BUILD_INTERFACE:${Anthy_ROOT}>
-    $<INSTALL_INTERFACE:include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 set(ordering_SRC
@@ -86,7 +86,7 @@ set(main_SRC
 add_library(anthy-unicode SHARED "${splitter_SRC}" "${ordering_SRC}" "${main_SRC}")
 target_include_directories(anthy-unicode PUBLIC
     $<BUILD_INTERFACE:${Anthy_ROOT}>
-    $<INSTALL_INTERFACE:include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 target_link_libraries(anthy-unicode
     m
