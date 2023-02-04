@@ -32,10 +32,6 @@ set(diclib_SRC
 )
 # add_library(diclib SHARED "${diclib_SRC}")
 
-add_compile_definitions(
-    S_IREAD=S_IRUSR
-    S_IWRITE=S_IWUSR
-)
 set(worddic_SRC
     ${Anthy_ROOT}/src-worddic/word_dic.c 
     ${Anthy_ROOT}/src-worddic/dic_util.c
@@ -52,6 +48,12 @@ set(worddic_SRC
     ${Anthy_ROOT}/src-worddic/feature_set.c
 )
 add_library(anthydic-unicode SHARED "${diclib_SRC}" "${worddic_SRC}")
+# S_IREAD S_IWRITE S_IEXEC are deprecated and does not exist on Android
+# https://www.gnu.org/software/libc/manual/html_node/Permission-Bits.html
+target_compile_definitions(anthydic-unicode PRIVATE
+    S_IREAD=S_IRUSR
+    S_IWRITE=S_IWUSR
+)
 target_include_directories(anthydic-unicode PUBLIC
     $<BUILD_INTERFACE:${Anthy_ROOT}>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
@@ -84,6 +86,10 @@ set(main_SRC
     ${Anthy_ROOT}/src-main/context.c
 )
 add_library(anthy-unicode SHARED "${splitter_SRC}" "${ordering_SRC}" "${main_SRC}")
+target_compile_definitions(anthy-unicode PRIVATE
+    S_IREAD=S_IRUSR
+    S_IWRITE=S_IWUSR
+)
 target_include_directories(anthy-unicode PUBLIC
     $<BUILD_INTERFACE:${Anthy_ROOT}>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
