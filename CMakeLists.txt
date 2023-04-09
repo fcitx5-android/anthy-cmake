@@ -30,7 +30,7 @@ set(diclib_SRC
     ${Anthy_ROOT}/src-diclib/logger.c
     ${Anthy_ROOT}/src-diclib/ruleparser.c
 )
-# add_library(diclib SHARED "${diclib_SRC}")
+# add_library(diclib "${diclib_SRC}")
 
 set(worddic_SRC
     ${Anthy_ROOT}/src-worddic/word_dic.c 
@@ -47,7 +47,7 @@ set(worddic_SRC
     ${Anthy_ROOT}/src-worddic/matrix.c
     ${Anthy_ROOT}/src-worddic/feature_set.c
 )
-add_library(anthydic-unicode SHARED "${diclib_SRC}" "${worddic_SRC}")
+add_library(anthydic-unicode "${diclib_SRC}" "${worddic_SRC}")
 # S_IREAD S_IWRITE S_IEXEC are deprecated and does not exist on Android
 # https://www.gnu.org/software/libc/manual/html_node/Permission-Bits.html
 target_compile_definitions(anthydic-unicode PRIVATE
@@ -67,7 +67,7 @@ set(ordering_SRC
     ${Anthy_ROOT}/src-ordering/infosort.c
     ${Anthy_ROOT}/src-ordering/candhistory.c
 )
-# add_library(ordering SHARED "${ordering_SRC}")
+# add_library(ordering "${ordering_SRC}")
 
 set(splitter_SRC
     ${Anthy_ROOT}/src-splitter/wordlist.c
@@ -79,13 +79,13 @@ set(splitter_SRC
     ${Anthy_ROOT}/src-splitter/lattice.c
     ${Anthy_ROOT}/src-splitter/segclass.c
 )
-# add_library(split SHARED "${splitter_SRC}")
+# add_library(split "${splitter_SRC}")
 
 set(main_SRC
     ${Anthy_ROOT}/src-main/main.c
     ${Anthy_ROOT}/src-main/context.c
 )
-add_library(anthy-unicode SHARED "${splitter_SRC}" "${ordering_SRC}" "${main_SRC}")
+add_library(anthy-unicode "${splitter_SRC}" "${ordering_SRC}" "${main_SRC}")
 target_compile_definitions(anthy-unicode PRIVATE
     S_IREAD=S_IRUSR
     S_IWRITE=S_IWUSR
