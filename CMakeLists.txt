@@ -54,6 +54,7 @@ target_compile_definitions(anthydic-unicode PRIVATE
     S_IREAD=S_IRUSR
     S_IWRITE=S_IWUSR
 )
+target_compile_options(anthydic-unicode PRIVATE "-ffile-prefix-map=${Anthy_ROOT}=.")
 target_include_directories(anthydic-unicode PUBLIC
     $<BUILD_INTERFACE:${Anthy_ROOT}>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
@@ -90,6 +91,7 @@ target_compile_definitions(anthy-unicode PRIVATE
     S_IREAD=S_IRUSR
     S_IWRITE=S_IWUSR
 )
+target_compile_options(anthy-unicode PRIVATE "-ffile-prefix-map=${Anthy_ROOT}=.")
 target_include_directories(anthy-unicode PUBLIC
     $<BUILD_INTERFACE:${Anthy_ROOT}>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
