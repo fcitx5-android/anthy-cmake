@@ -127,3 +127,18 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/AnthyConfig.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/AnthyConfigVersion.cmake"
         DESTINATION "lib/cmake"
 )
+
+if (NOT ANDROID)
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/anthy-unicode.pc.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/anthy-unicode.pc"
+        @ONLY
+    )
+
+    install(
+      FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/anthy-unicode.pc"
+      DESTINATION
+        "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    )
+endif()
